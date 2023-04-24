@@ -21,16 +21,16 @@ public class Member extends BaseEntity{
     private String password;
 
     @OneToMany(mappedBy = "member")
-    private List<BodyInfo> bodyInfos = new ArrayList<>();
+    private final List<BodyInfo> bodyInfos = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Diet> diets = new ArrayList<>();
+    private  final List<Diet> diets = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Post> posts;
+    private final List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Likes> likes = new ArrayList<>();
+    private final List<Likes> likes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
@@ -41,7 +41,7 @@ public class Member extends BaseEntity{
     private Follow followed;
 
     @OneToMany(mappedBy = "member")
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 
 
     @Builder

@@ -23,8 +23,8 @@ public class Post  extends BaseEntity{
     private Member member;
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
-    private List<Likes> likes = new ArrayList<>();
+    private final List<Likes> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 }

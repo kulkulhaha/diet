@@ -17,7 +17,7 @@ public class Diet extends BaseEntity{
     private boolean open = false;
 
     @OneToMany(mappedBy = "diet")
-    private List<FoodDiet> foodDiets = new ArrayList<>();
+    private final List<FoodDiet> foodDiets = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
