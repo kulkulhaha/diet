@@ -53,9 +53,8 @@ class MemberControllerTest {
         Member member = Member.builder().username("kim").loginId("kim123413").password("2134").build();
         memberRepository.save(member);
         mockMvc.perform(get("http://localhost:8080/member/{memberId}",member.getId()))
-                .andExpect(jsonPath("username").value("kim"))
-                .andExpect(jsonPath("loginId").value("kim123413"))
-                .andExpect(jsonPath("password").value("2134"))
+                .andExpect(jsonPath("$.body.username").value("kim"))
+                .andExpect(jsonPath("$.body.loginId").value("kim123413"))
                 .andDo(print());
     }
 
@@ -68,8 +67,8 @@ class MemberControllerTest {
 
         mockMvc.perform(get("http://localhost:8080/members"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].loginId").value("kim123413"))
-                .andExpect(jsonPath("$[1].loginId").value("kim123333"))
+                .andExpect(jsonPath("$.body[0].loginId").value("kim123413"))
+                .andExpect(jsonPath("$.body[1].loginId").value("kim123333"))
                 .andDo(print());
 
 
@@ -125,13 +124,6 @@ class MemberControllerTest {
                 .andDo(print());
     }
 
-    @Test
-    void name() throws Exception {
-        Member member1 = Member.builder().username("kim").loginId("kim123413").password("2134").build();
-        Member saved = memberRepository.save(member1);
 
-        mockMvc.perform(get("http://localhost:8080/member/{memberId}",saved.getId()))
-                .andDo(print());
 
-    }
 }
