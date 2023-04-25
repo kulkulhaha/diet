@@ -41,12 +41,14 @@ public class MemberService {
 
     public void editMember(Long memberId, UpdateMemberDto updateMemberDto) {
         Member member = memberRepository.findById(memberId).orElseThrow(NoSuchMember::new);
-        MemberEditor.MemberEditorBuilder builder = member.toEditor();
-        MemberEditor editor = builder
-                .username(updateMemberDto.getUsername())
-                .loginId(updateMemberDto.getLoginId())
-                .password(updateMemberDto.getPassword())
+        MemberEditor.MemberEditorBuilder editorBuilder = member.toEditor();
+
+        MemberEditor editor = editorBuilder.username(updateMemberDto.getUsername() != null ? updateMemberDto.getUsername() : member.getUsername())
+                .loginId(updateMemberDto.getLoginId() != null ? updateMemberDto.getLoginId() : member.getLoginId())
+                .password(updateMemberDto.getPassword() != null ? updateMemberDto.getPassword() : member.getPassword())
                 .build();
+
+
         member.edit(editor);
 
     }

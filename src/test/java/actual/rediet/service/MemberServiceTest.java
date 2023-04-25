@@ -2,6 +2,7 @@ package actual.rediet.service;
 
 import actual.rediet.domain.Member;
 import actual.rediet.dto.CreateMemberDto;
+import actual.rediet.dto.UpdateMemberDto;
 import actual.rediet.exception.NoSuchMember;
 import actual.rediet.respository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -78,6 +79,18 @@ class MemberServiceTest {
     void deleteException() {
 
         assertThatThrownBy(()->memberService.removeMember(1L)).isInstanceOf(NoSuchMember.class);
+    }
+    @Test
+    @DisplayName("멤버 정보 변경")
+    void editMember() {
+        CreateMemberDto memberDto = CreateMemberDto.builder().username("kim").loginId("123").password("2134").build();
+        UpdateMemberDto updateMemberDto = UpdateMemberDto.builder().username("kim1").loginId("231").build();
+        Member member = memberService.save(memberDto);
+        memberService.editMember(member.getId(),updateMemberDto);
+        Member findMember = memberService.findById(member.getId());
+        assertThat(findMember.getUsername()).isEqualTo(updateMemberDto.getUsername());
+        assertThat(findMember.getLoginId()).isEqualTo(updateMemberDto.getLoginId());
+        assertThat(findMember.getPassword()).isEqualTo(memberDto.getPassword());
     }
 
 

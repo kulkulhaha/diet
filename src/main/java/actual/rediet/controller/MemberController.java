@@ -6,7 +6,6 @@ import actual.rediet.dto.UpdateMemberDto;
 import actual.rediet.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class MemberController {
     }
 
     @GetMapping("/member/{memberId}")
-    public Member getM(@PathVariable Long memberId){
+    public Member getOne(@PathVariable Long memberId){
         return memberService.findById(memberId);
     }
 
@@ -33,8 +32,8 @@ public class MemberController {
     }
 
     @DeleteMapping("/member/{memberId}")
-    public Member delete(@PathVariable Long memberId){
-        return memberService.findById(memberId);
+    public void delete(@PathVariable Long memberId){
+        memberService.removeMember(memberId);
     }
 
     @PatchMapping("/member/{memberId}")
