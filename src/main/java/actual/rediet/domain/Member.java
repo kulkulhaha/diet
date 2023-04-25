@@ -1,6 +1,9 @@
 package actual.rediet.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,8 +19,15 @@ public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     private Long id;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
+    @Size(max = 16,min = 8)
     private String loginId;
+
+    @NotBlank
     private String password;
 
     @OneToMany(mappedBy = "member")

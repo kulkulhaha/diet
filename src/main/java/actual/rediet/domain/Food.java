@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class Food extends BaseEntity{
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
     private String name;
 

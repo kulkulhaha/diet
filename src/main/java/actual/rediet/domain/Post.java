@@ -25,6 +25,6 @@ public class Post  extends BaseEntity{
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private final List<Likes> likes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private final List<Comment> comments = new ArrayList<>();
 }
