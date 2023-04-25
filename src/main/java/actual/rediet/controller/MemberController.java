@@ -1,10 +1,11 @@
 package actual.rediet.controller;
 
 import actual.rediet.domain.Member;
-import actual.rediet.dto.CreateMemberDto;
-import actual.rediet.dto.UpdateMemberDto;
+import actual.rediet.dto.*;
 import actual.rediet.service.MemberService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +23,14 @@ public class MemberController {
     }
 
     @GetMapping("/member/{memberId}")
-    public Member getOne(@PathVariable Long memberId){
-        return memberService.findById(memberId);
+    public Result<ResponseMember> getOne(@PathVariable Long memberId){
+        return new Result<>(memberService.findById(memberId));
+
     }
 
     @GetMapping("/members")
-    public List<Member> findMembers(){
-        return memberService.findMembers();
+    public ResultList<ResponseMember> findMembers(){
+        return new ResultList<>(memberService.findMembers());
     }
 
     @DeleteMapping("/member/{memberId}")
@@ -40,4 +42,5 @@ public class MemberController {
     public void update(@PathVariable Long memberId, @RequestBody UpdateMemberDto updateMemberDto){
          memberService.editMember(memberId,updateMemberDto);
     }
+
 }

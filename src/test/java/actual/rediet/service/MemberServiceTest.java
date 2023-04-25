@@ -1,8 +1,7 @@
 package actual.rediet.service;
 
 import actual.rediet.domain.Member;
-import actual.rediet.dto.CreateMemberDto;
-import actual.rediet.dto.UpdateMemberDto;
+import actual.rediet.dto.*;
 import actual.rediet.exception.NoSuchMember;
 import actual.rediet.respository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -42,10 +41,10 @@ class MemberServiceTest {
     void findById() {
         CreateMemberDto memberDto = CreateMemberDto.builder().username("kim").loginId("123").password("2134").build();
         Member member = memberService.save(memberDto);
-        Member findMember = memberService.findById(member.getId());
+        ResponseMember findMember = memberService.findById(member.getId());
+
         assertThat(findMember.getUsername()).isEqualTo(memberDto.getUsername());
         assertThat(findMember.getLoginId()).isEqualTo(memberDto.getLoginId());
-        assertThat(findMember.getPassword()).isEqualTo(memberDto.getPassword());
     }
 
     @Test
@@ -62,8 +61,9 @@ class MemberServiceTest {
         Member member1 = memberService.save(memberDto1);
         CreateMemberDto memberDto2 = CreateMemberDto.builder().username("kim2").loginId("1232123123").password("2134").build();
         Member member2 = memberService.save(memberDto2);
-        List<Member> members = memberService.findMembers();
-        assertThat(members).contains(member1,member2);
+        List<ResponseMember> members = memberService.findMembers();
+
+        assertThat(members.size()).isEqualTo(2);
     }
 
     @Test
@@ -87,10 +87,9 @@ class MemberServiceTest {
         UpdateMemberDto updateMemberDto = UpdateMemberDto.builder().username("kim1").loginId("231").build();
         Member member = memberService.save(memberDto);
         memberService.editMember(member.getId(),updateMemberDto);
-        Member findMember = memberService.findById(member.getId());
+        ResponseMember findMember = memberService.findById(member.getId());
         assertThat(findMember.getUsername()).isEqualTo(updateMemberDto.getUsername());
         assertThat(findMember.getLoginId()).isEqualTo(updateMemberDto.getLoginId());
-        assertThat(findMember.getPassword()).isEqualTo(memberDto.getPassword());
     }
 
 

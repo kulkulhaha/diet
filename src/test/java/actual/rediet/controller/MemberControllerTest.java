@@ -3,6 +3,7 @@ package actual.rediet.controller;
 import actual.rediet.domain.Member;
 import actual.rediet.dto.UpdateMemberDto;
 import actual.rediet.respository.MemberRepository;
+import actual.rediet.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -122,5 +123,15 @@ class MemberControllerTest {
                         .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
+    }
+
+    @Test
+    void name() throws Exception {
+        Member member1 = Member.builder().username("kim").loginId("kim123413").password("2134").build();
+        Member saved = memberRepository.save(member1);
+
+        mockMvc.perform(get("http://localhost:8080/member/{memberId}",saved.getId()))
+                .andDo(print());
+
     }
 }

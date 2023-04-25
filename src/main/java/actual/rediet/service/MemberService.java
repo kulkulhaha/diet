@@ -1,16 +1,17 @@
 package actual.rediet.service;
 
 import actual.rediet.domain.Member;
-import actual.rediet.dto.CreateMemberDto;
-import actual.rediet.dto.MemberEditor;
-import actual.rediet.dto.UpdateMemberDto;
+import actual.rediet.dto.*;
 import actual.rediet.exception.NoSuchMember;
 import actual.rediet.respository.MemberRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,14 +24,19 @@ public class MemberService {
         return memberRepository.save(createMemberDto.toEntity());
     }
 
-    public Member findById(Long id){
-        return memberRepository.findById(id)
-                .orElseThrow(NoSuchMember::new);
-        //TODO: Querydsl 로 변환?,  EntityGraph 을 사용하려고 하니 Validation 에 걸린다.
+    public ResponseMember findById(Long id){
+        return new ResponseMember(memberRepository.findById(id)
+                .orElseThrow(NoSuchMember::new));
+
+
+
+        //TODO: Querydsl 로 변환?,  EntityGraph 을 사용하려고 하니 Validation 에 걸린다. Result 로 감싸기
     }
 
-    public List<Member> findMembers(){
-        return memberRepository.findAll();
+    public List<ResponseMember> findMembers(){
+        return memberRepository.findAll()
+                .stream().map(ResponseMember::new)
+                .collect(Collectors.toList());
     }
 
     public void removeMember(Long id){
@@ -52,4 +58,5 @@ public class MemberService {
         member.edit(editor);
 
     }
+
 }
