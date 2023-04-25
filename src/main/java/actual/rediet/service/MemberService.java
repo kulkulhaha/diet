@@ -2,6 +2,8 @@ package actual.rediet.service;
 
 import actual.rediet.domain.Member;
 import actual.rediet.dto.CreateMemberDto;
+import actual.rediet.dto.MemberEditor;
+import actual.rediet.dto.UpdateMemberDto;
 import actual.rediet.exception.NoSuchMember;
 import actual.rediet.respository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -37,4 +39,15 @@ public class MemberService {
     }
 
 
+    public void editMember(Long memberId, UpdateMemberDto updateMemberDto) {
+        Member member = memberRepository.findById(memberId).orElseThrow(NoSuchMember::new);
+        MemberEditor.MemberEditorBuilder builder = member.toEditor();
+        MemberEditor editor = builder
+                .username(updateMemberDto.getUsername())
+                .loginId(updateMemberDto.getLoginId())
+                .password(updateMemberDto.getPassword())
+                .build();
+        member.edit(editor);
+
+    }
 }

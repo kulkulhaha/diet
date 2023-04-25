@@ -2,6 +2,7 @@ package actual.rediet.controller;
 
 import actual.rediet.domain.Member;
 import actual.rediet.dto.CreateMemberDto;
+import actual.rediet.dto.UpdateMemberDto;
 import actual.rediet.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -36,4 +37,8 @@ public class MemberController {
         return memberService.findById(memberId);
     }
 
+    @PatchMapping("/member/{memberId}")
+    public void update(@PathVariable Long memberId, @RequestBody UpdateMemberDto updateMemberDto){
+         memberService.editMember(memberId,updateMemberDto);
+    }
 }

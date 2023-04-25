@@ -1,5 +1,6 @@
 package actual.rediet.domain;
 
+import actual.rediet.dto.MemberEditor;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -59,5 +60,19 @@ public class Member extends BaseEntity{
         this.username = username;
         this.loginId = loginId;
         this.password = password;
+    }
+
+    public MemberEditor.MemberEditorBuilder toEditor() {
+        return MemberEditor.builder()
+                .username(username)
+                .loginId(loginId)
+                .password(password);
+
+    }
+
+    public void edit(MemberEditor memberEditor){
+        username = memberEditor.getUsername();
+        loginId = memberEditor.getLoginId();
+        password = memberEditor.getPassword();
     }
 }
